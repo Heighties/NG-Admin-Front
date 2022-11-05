@@ -19,7 +19,7 @@ function Login() {
     const navigate = useNavigate()
 
     useEffect(()=>{
-        const auth = localStorage.getItem('user')
+        const auth = localStorage.getItem('token')
         if(auth){
             navigate('/')
         }

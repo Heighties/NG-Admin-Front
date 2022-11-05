@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import LOGO from '../../assets/logoNB.png'
 // import { StyledLink } from '../../utils/style/Atom'
@@ -30,13 +30,27 @@ const StyledLink = styled(Link)`
 `
 
 function Header() {
+  const auth = localStorage.getItem('user')
+  const navigate = useNavigate();
+  const logout =()=>{
+    localStorage.clear();
+    navigate('/login')
+  }
   return (
     <NavContainer>
     <HomeLogo src={LOGO} />
-    
     <StyledLink to='/'>Accueil</StyledLink>
-    <StyledLink to='/login'>Login</StyledLink>
-    <StyledLink to='/signup'>Sign Up</StyledLink>
+    <ul className='nav-ul'>
+            {/* si logé on ne voit pas le bouton signup et inversement */}
+            <li>{auth ? <Link onClick={logout} to='/login'>Logout</Link> : <Link to='/signup'>Sign Up</Link>}</li>
+            { 
+              auth ? <li><Link onClick={logout} to='/signup'>Logout</Link></li> 
+              :<> 
+              <li><Link to='/'>Sign Up</Link></li>
+              <li><Link to='/login'>Login</Link></li>
+              </>
+            }
+        </ul>
     </NavContainer>
   )
 }

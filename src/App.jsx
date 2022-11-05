@@ -1,7 +1,10 @@
 import {Routes, Route} from 'react-router-dom' 
 import React from 'react';
-import Header from './Components/Header';
 import './main.css'
+
+//Components :
+import Header from './Components/Header';
+import PrivateRoutes from './Components/PrivateRoutes';
 
 // Pages : 
 import Home from './pages/Home';
@@ -17,13 +20,17 @@ function App() {
     <div className='App'>
     <Header />
       <Routes>
-        <Route path='/login' element={<Login/>} />
-        <Route path='/signup' element={<Signup/>}/>
+      <Route element={<PrivateRoutes/>}>
+        
         <Route path='/' element={<Home />} />
         <Route path='/showreel' element={<Showreel />} />
         <Route path='/realisation' element={<Realisations />} />
         <Route path='/infos' element={<Infos />} />
         <Route path='/realisation/:_id' element={<SingleRealisation />}/>
+        <Route path='/logout' element={<h1>Logout</h1>}/>
+        </Route>
+        <Route path='/login' element={<Login/>} />
+        <Route path='/signup' element={<Signup/>}/>
       </Routes>
     </div>
   );
