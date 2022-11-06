@@ -30,7 +30,7 @@ const StyledLink = styled(Link)`
 `
 
 function Header() {
-  const auth = localStorage.getItem('user')
+  const auth = localStorage.getItem('token')
   const navigate = useNavigate();
   const logout =()=>{
     localStorage.clear();
@@ -39,14 +39,19 @@ function Header() {
   return (
     <NavContainer>
     <HomeLogo src={LOGO} />
-    <StyledLink to='/'>Accueil</StyledLink>
+    {/* <StyledLink to='/'>Accueil</StyledLink> */}
     <ul className='nav-ul'>
+            <li><Link to='/'>Accueil</Link></li>
+            <li><Link to='/product'>Product</Link></li>
+            <li><Link to='/add'>Add Product</Link></li>
+            <li><Link to='/update'>Update Product</Link></li>
+            <li><Link to='/profile'>Profile</Link></li>
             {/* si logé on ne voit pas le bouton signup et inversement */}
-            <li>{auth ? <Link onClick={logout} to='/login'>Logout</Link> : <Link to='/signup'>Sign Up</Link>}</li>
+            {/* <li>{auth ? <Link onClick={logout} to='/login'>Logout</Link> : <Link to='/signup'>Sign Up</Link>}</li> */}
             { 
               auth ? <li><Link onClick={logout} to='/signup'>Logout</Link></li> 
               :<> 
-              <li><Link to='/'>Sign Up</Link></li>
+              <li><Link to='/signup'>Sign Up</Link></li>
               <li><Link to='/login'>Login</Link></li>
               </>
             }

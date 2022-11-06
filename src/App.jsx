@@ -14,6 +14,11 @@ import Infos from './pages/Infos';
 import SingleRealisation from './pages/SingleRealisation';
 import Login from './pages/Login';
 import Signup from './pages/SignUp';
+//pages test:
+import Product from './pages/Product';
+import AddProduct from './pages/AddProduct';
+import UpdateProduct from './pages/UpdateProduct';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -28,6 +33,10 @@ function App() {
         <Route path='/infos' element={<Infos />} />
         <Route path='/realisation/:_id' element={<SingleRealisation />}/>
         <Route path='/logout' element={<h1>Logout</h1>}/>
+        <Route path='/product' element={<Product/>}/>
+        <Route path='/add' element={<AddProduct/>}/>
+        <Route path='/update' element={<UpdateProduct/>}/>
+        <Route path='/profile' element={<Profile/>}/>
         </Route>
         <Route path='/login' element={<Login/>} />
         <Route path='/signup' element={<Signup/>}/>
