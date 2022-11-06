@@ -14,6 +14,7 @@ import Infos from './pages/Infos';
 import SingleRealisation from './pages/SingleRealisation';
 import Login from './pages/Login';
 import Signup from './pages/SignUp';
+import AddRealisation from './pages/AddRealisation';
 //pages test:
 import Product from './pages/Product';
 import AddProduct from './pages/AddProduct';
@@ -37,6 +38,7 @@ function App() {
         <Route path='/add' element={<AddProduct/>}/>
         <Route path='/update' element={<UpdateProduct/>}/>
         <Route path='/profile' element={<Profile/>}/>
+        <Route path='addrealisation' element={<AddRealisation/>}/>
         </Route>
         <Route path='/login' element={<Login/>} />
         <Route path='/signup' element={<Signup/>}/>

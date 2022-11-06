@@ -24,13 +24,13 @@ const Wrapper = styled.div`
     padding-top: 5rem;
 `
 
-const AddReal = styled.button`
-    width: 150px;
-    height: 30px;
-    align-self: center;
-    cursor: pointer;
-    /* border: solid black 4px; */
-`
+// const AddReal = styled.div`
+//     width: 150px;
+//     height: 30px;
+//     align-self: center;
+//     cursor: pointer;
+//     /* border: solid black 4px; */
+// `
 
 const RealisationsSection = styled.div`
   display: flex;
@@ -73,7 +73,7 @@ if (error) {
 
   return (
     <Wrapper>
-      <AddReal>Add new</AddReal>
+      <StyledLink to={'/addrealisation'}>Add new</StyledLink>
       <RealisationsSection>
         {realisationList.map((realisation) => {
           return(

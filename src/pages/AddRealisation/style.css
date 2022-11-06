@@ -1,0 +1,11 @@
+.realisation{
+    margin-left:30%;
+}
+
+.inputBox{
+    padding: 7px;
+    display: block;
+    border: 1px solid black;
+    width: 300px;
+    margin:20px;
+}
