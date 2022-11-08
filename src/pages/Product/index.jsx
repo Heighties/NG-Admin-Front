@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
 // import { useFetch } from "../../utils/hooks";
+import { Link } from "react-router-dom";
+// import UpdateProduct from "../UpdateProduct";
 
 function Product() {
   const [products, setProducts] = useState([]);
@@ -47,6 +49,7 @@ function Product() {
           <li>{item.category}</li>
           <li>
             <button onClick={() => deleteProduct(item._id)}>Delete</button>
+            <Link to={"/update/" + item._id}>Update</Link>
           </li>
         </ul>
       ))}
