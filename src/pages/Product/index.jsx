@@ -1,33 +1,35 @@
-import React, {useEffect, useState} from 'react'
-import './style.css'
+import React, { useEffect, useState } from "react";
+import "./style.css";
+// import { useFetch } from "../../utils/hooks";
 
 function Product() {
-  const [products, setProducts]=useState([])
+  const [products, setProducts] = useState([]);
 
-  useEffect(()=>{
-    getProducts()
-  })
+  useEffect(() => {
+    getProducts();
+  }, []);
 
-  const getProducts = async()=>{
-    let result = await fetch('http://localhost:8000/api/products')
-    result = await result.json()
-    setProducts(result)
-  }
-  
-  const deleteProduct=async(id)=>{
-    let result = await fetch(`http://localhost:8000/api/product/${id}`,{
-      method:'Delete'
-    })
-    result = await result.json()
-    if(result){
-      alert('Product deleted')
-      getProducts()
+  const getProducts = async () => {
+    let result = await fetch("http://localhost:8000/api/products");
+    result = await result.json();
+    setProducts(result);
+  };
+
+  const deleteProduct = async (id) => {
+    let result = await fetch(`http://localhost:8000/api/products/${id}`, {
+      method: "Delete",
+    });
+
+    result = await result.json();
+
+    if (result) {
+      alert("Product deleted");
+      getProducts();
     }
-  }
-  // console.warn(products);
+  };
 
   return (
-    <div className='product-list'>
+    <div className="product-list">
       <h3>Products</h3>
       <ul>
         <li>S. No.</li>
@@ -36,20 +38,20 @@ function Product() {
         <li>Category</li>
         <li>Operation</li>
       </ul>
-      {
-        products.map((item, index)=>
-          <ul key={item._id}>
-            <li>{index + 1}</li>
-            <li>{item.name}</li>
-            <li>{item.price}</li>
-            <li>{item.category}</li>
-            <li><button ocClick={()=>deleteProduct(item._id)}>Delete</button></li>
-          </ul>
-        )
-      }
+
+      {products.map((item, index) => (
+        <ul key={item._id}>
+          <li>{index + 1}</li>
+          <li>{item.name}</li>
+          <li>{item.price}</li>
+          <li>{item.category}</li>
+          <li>
+            <button onClick={() => deleteProduct(item._id)}>Delete</button>
+          </li>
+        </ul>
+      ))}
     </div>
-    
-  )
+  );
 }
 
-export default Product
+export default Product;
