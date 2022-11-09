@@ -57,7 +57,7 @@ const Description = styled.input`
 
 function SingleRealisation() {
   const [name, setName] = React.useState("");
-  const [videoURL, setVideoURL] = React.useState("");
+  const [videoUrl, setVideoURL] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [picture, setPicture] = React.useState("");
   const params = useParams();
@@ -73,13 +73,13 @@ function SingleRealisation() {
     result = await result.json();
     console.warn(result);
     setName(result.name);
-    setVideoURL(result.videoURL);
-    setDescription(result.Description);
+    setVideoURL(result.videoUrl);
+    setDescription(result.description);
     setPicture(result.picture);
   };
 
   const updateRealisation = async () => {
-    console.warn(name, videoURL, description, picture);
+    console.warn(name, videoUrl, description, picture);
   };
 
   return (
@@ -101,8 +101,10 @@ function SingleRealisation() {
         <input
           type="texte"
           placeholder="Enter video URL"
-          value={videoURL}
-          onChange={(e) => setVideoURL(e.target.value)}
+          value={videoUrl}
+          onChange={(e) => {
+            setVideoURL(e.target.value);
+          }}
         />
       </Container>
       <Container>
@@ -111,7 +113,9 @@ function SingleRealisation() {
           type="texte"
           placeholder="Enter realisation description"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
         />
       </Container>
       <ImgWrapper>
