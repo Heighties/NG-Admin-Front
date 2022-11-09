@@ -1,7 +1,7 @@
 import React from "react";
 // import Wrapper from '../../Components/Wrapper'
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 // import { useFetch } from '../../utils/hooks'
 // import ReactPlayer from 'react-player'
 // import { useState } from 'react'
@@ -61,6 +61,7 @@ function SingleRealisation() {
   const [description, setDescription] = React.useState("");
   const [picture, setPicture] = React.useState("");
   const params = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getRealisationDetails();
@@ -80,6 +81,20 @@ function SingleRealisation() {
 
   const updateRealisation = async () => {
     console.warn(name, videoUrl, description, picture);
+    let result = await fetch(
+      `http://localhost:8000/api/realisation/${params._id}`,
+      {
+        method: "Put",
+        body: JSON.stringify({ name, videoUrl, description, picture }),
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      }
+    );
+    result = await result.json();
+    if (result) {
+      navigate("/realisation");
+    }
   };
 
   return (
