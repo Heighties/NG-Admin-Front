@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-// import { useFetch } from "../../utils/hooks";
 import { Link } from "react-router-dom";
 
 const StyledLink = styled(Link)`
@@ -23,14 +22,6 @@ const Wrapper = styled.div`
   align-items: center;
   padding-top: 5rem;
 `;
-
-// const AddReal = styled.div`
-//     width: 150px;
-//     height: 30px;
-//     align-self: center;
-//     cursor: pointer;
-//     /* border: solid black 4px; */
-// `
 
 const RealisationsSection = styled.div`
   display: flex;
@@ -58,50 +49,65 @@ const Buttons = styled.div`
 
 function Realisations() {
   const [realisation, setRealisation] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     getRealisation();
   }, []);
 
   const getRealisation = async () => {
-    let result = await fetch("http://localhost:8000/api/realisation");
-    result = await result.json();
-    setRealisation(result);
-  };
-
-  const deleteRealisation = async (id) => {
-    let result = await fetch(`http://localhost:8000/api/realisation/${id}`, {
-      method: "Delete",
-    });
-
-    result = await result.json();
-
-    if (result) {
-      alert("Realisation deleted");
-      getRealisation();
+    try {
+      let result = await fetch("http://localhost:8000/api/realisation");
+      result = await result.json();
+      setRealisation(result);
+    } catch (error) {
+      setError(error);
     }
   };
 
-  // console.log(realisationList);
+  const deleteRealisation = async (id) => {
+    try {
+      let result = await fetch(`http://localhost:8000/api/realisation/${id}`, {
+        method: "Delete",
+      });
 
+      result = await result.json();
+
+      if (result) {
+        alert("Realisation deleted");
+        getRealisation();
+      }
+    } catch (error) {
+      setError(error);
+    }
+  };
   return (
     <Wrapper>
       <StyledLink to={"/addrealisation"}>Add new</StyledLink>
-      <RealisationsSection>
-        {realisation.map((item) => {
-          return (
-            <RealisationCard key={item._id}>
-              <RealisationTitle>{item.name}</RealisationTitle>
-              <Buttons>
-                <StyledLink to={`/realisation/${item._id}`}>Modify</StyledLink>
-                <RealisationButton onClick={() => deleteRealisation(item._id)}>
-                  Delete
-                </RealisationButton>
-              </Buttons>
-            </RealisationCard>
-          );
-        })}
-      </RealisationsSection>
+      {error ? (
+        <div>An error occurred: {error.message}</div>
+      ) : (
+        <RealisationsSection>
+          {Array.isArray(realisation) &&
+            realisation.map((item) => {
+              return (
+                <RealisationCard key={item._id}>
+                  <RealisationTitle>{item.name}</RealisationTitle>
+                  <Buttons>
+                    <StyledLink to={`/realisation/${item._id}`}>
+                      Modify
+                    </StyledLink>
+                    <RealisationButton
+                      onClick={() => deleteRealisation(item._id)}
+                    >
+                      Delete
+                    </RealisationButton>
+                  </Buttons>
+                </RealisationCard>
+              );
+            })}
+        </RealisationsSection>
+      )}
     </Wrapper>
   );
 }
