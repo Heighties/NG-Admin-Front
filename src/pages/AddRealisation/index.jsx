@@ -23,7 +23,8 @@ function AddRealisation() {
   const sendPicture = (imageId) => {
     // Création d'un objet FormData qui contiendra les données de l'image
     let formData = new FormData();
-    formData.append("image", imageUrl);
+    // formData.append("image", imageUrl);
+    formData.append("image", imageUrl, imageUrl.name);
 
     // Envoi de la requête HTTP au serveur pour envoyer l'image
     fetch(`http://localhost:8000/api/realisation/images`, {
@@ -69,7 +70,13 @@ function AddRealisation() {
     // Envoi de la requête HTTP au serveur pour ajouter la réalisation
     fetch("http://localhost:8000/api/realisation", {
       method: "POST",
-      body: JSON.stringify({ name, description, videoUrl, imageUrl }),
+      // body: JSON.stringify({ name, description, videoUrl, imageUrl }),
+      body: JSON.stringify({
+        name,
+        description,
+        videoUrl,
+        imageId: imageUrl.name,
+      }),
       headers: {
         "Content-Type": "application/json",
         // Authorization: auth,
