@@ -7,14 +7,14 @@ function AddRealisation() {
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [videoUrl, setVideoUrl] = React.useState("");
-  const [picture, setPicture] = React.useState("");
+  const [imageUrl, setImageUrl] = React.useState("");
 
   // Utilisation de la fonction useNavigate pour naviguer vers une autre page
   const navigate = useNavigate();
 
   // Fonction appelée lorsque l'utilisateur sélectionne un fichier dans le champ "input" de type "file"
   const fileOnchange = (event) => {
-    setPicture(event.target.files[0]);
+    setImageUrl(event.target.files[0]);
   };
 
   const token = JSON.parse(localStorage.getItem("token")).token;
@@ -23,7 +23,7 @@ function AddRealisation() {
   const sendPicture = (imageId) => {
     // Création d'un objet FormData qui contiendra les données de l'image
     let formData = new FormData();
-    formData.append("image", picture);
+    formData.append("image", imageUrl);
 
     // Envoi de la requête HTTP au serveur pour envoyer l'image
     fetch(`http://localhost:8000/api/realisation/images`, {
@@ -52,10 +52,10 @@ function AddRealisation() {
       name,
       description,
       videoUrl,
-      picture
+      imageUrl
     );
 
-    console.log("Valeur de picture :", picture);
+    console.log("Valeur de picture :", imageUrl);
 
     const token = JSON.parse(localStorage.getItem("token")).token;
 
@@ -69,7 +69,7 @@ function AddRealisation() {
     // Envoi de la requête HTTP au serveur pour ajouter la réalisation
     fetch("http://localhost:8000/api/realisation", {
       method: "POST",
-      body: JSON.stringify({ name, description, videoUrl, picture }),
+      body: JSON.stringify({ name, description, videoUrl, imageUrl }),
       headers: {
         "Content-Type": "application/json",
         // Authorization: auth,
