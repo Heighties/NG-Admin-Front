@@ -57,9 +57,22 @@ function Realisations() {
 
   const getRealisation = async () => {
     try {
-      let result = await fetch("http://localhost:8000/api/realisation");
-      result = await result.json();
-      setRealisation(result);
+      // Vérification que le token existe bien dans le local storage
+      if (localStorage.getItem("token")) {
+        // Récupération du token dans le local storage
+        const token = JSON.parse(localStorage.getItem("token")).token;
+
+        // Création de l'objet Headers
+        const headers = new Headers();
+        // Ajout de l'en-tête Authorization avec la valeur du token
+        headers.append("Authorization", `Bearer ${token}`);
+
+        let result = await fetch("http://localhost:8000/api/realisation", {
+          headers: headers,
+        });
+        result = await result.json();
+        setRealisation(result);
+      }
     } catch (error) {
       setError(error);
     }
