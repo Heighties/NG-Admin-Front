@@ -15,6 +15,7 @@ function AddRealisation() {
   // Fonction appelée lorsque l'utilisateur sélectionne un fichier dans le champ "input" de type "file"
   const fileOnchange = (event) => {
     setImageUrl(event.target.files[0]);
+    console.log("Fichier sélectionné :", imageUrl);
   };
 
   const token = JSON.parse(localStorage.getItem("token")).token;
@@ -23,8 +24,9 @@ function AddRealisation() {
   const sendPicture = (imageId) => {
     // Création d'un objet FormData qui contiendra les données de l'image
     let formData = new FormData();
-    // formData.append("image", imageUrl);
-    formData.append("image", imageUrl, imageUrl.name);
+    formData.append("image", imageId, imageId.name);
+
+    console.log("Image envoyée au serveur :", imageId);
 
     // Envoi de la requête HTTP au serveur pour envoyer l'image
     fetch(`http://localhost:8000/api/realisation/images`, {
@@ -32,7 +34,6 @@ function AddRealisation() {
       body: formData,
       headers: {
         "Content-Type": "multipart/form-data",
-        // Authorization: auth,
         Authorization: `Bearer ${token}`,
       },
     })
@@ -62,36 +63,43 @@ function AddRealisation() {
 
     console.log("coucou");
 
-    // const userId = JSON.parse(localStorage.getItem("token")).userId;
-    // console.warn(userId);
+    console.log(
+      "Données de la réalisation envoyées au serveur :",
+      name,
+      description,
+      videoUrl,
+      imageUrl
+    );
 
-    // const auth = localStorage.getItem("token");
+    console.log("Appel de la fonction sendPicture");
+    sendPicture(imageUrl);
+    console.log("Fin de l'appel de la fonction sendPicture");
 
     // Envoi de la requête HTTP au serveur pour ajouter la réalisation
     fetch("http://localhost:8000/api/realisation", {
       method: "POST",
-      // body: JSON.stringify({ name, description, videoUrl, imageUrl }),
       body: JSON.stringify({
         name,
         description,
         videoUrl,
-        imageId: imageUrl.name,
+        imageId: imageUrl.name, // Utilisation de la variable imageId plutôt que imageUrl
       }),
       headers: {
         "Content-Type": "application/json",
-        // Authorization: auth,
         Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
       .then((result) => {
         console.log("Réponse du serveur :", result);
-        sendPicture();
         navigate("/realisation");
       })
       // Traitement des erreurs potentielles
       .catch((error) => {
-        console.error("Erreur lors de l'ajout de la réalisation :", error);
+        console.error(
+          "Erreur lors de l'envoi des données de la réalisation :",
+          error
+        );
       });
   };
 
